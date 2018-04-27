@@ -1,0 +1,51 @@
+﻿@model Dragonwolf.Datatable.Web.Models.HomeModel
+@using Dragonwolf.Razor.Helpers
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<fieldset>
+    <legend>Table 1 : Datas From Model</legend>
+    <article>
+        <div>
+            @Html.KODataTableFor(m => m.ListeItems, "MyTable1", null, null, new { @class = "col-md-12", id = "divTableContainer1" })
+        </div>
+    </article>
+</fieldset>
+<br />
+<fieldset>
+    <legend>Table 2 : Datas From JS</legend>
+    <article>
+        <div>
+            @Html.KODataTable(new Dragonwolf.Razor.Helpers.Models.ColumnsModelsCollection()
+               {
+                    new Dragonwolf.Razor.Helpers.Models.ColumnModel("MyTable2", "Id", "Identifiant", typeof(int), true, false, false, null, null, null, null, null, null, null, null),
+                    new Dragonwolf.Razor.Helpers.Models.ColumnModel("MyTable2", "Libelle", "Nom", typeof(string), true, false, false, null, null, null, null, null, null, null, null),
+                    new Dragonwolf.Razor.Helpers.Models.ColumnModel("MyTable2", "Test", "Test 1", typeof(string), true, false, false, null, null, null, null, "Group 1", null, "Group 1", null),
+                    new Dragonwolf.Razor.Helpers.Models.ColumnModel("MyTable2", "Test2", "Test 2", typeof(string), true, false, false, null, null, null, null, "Group 1", null, "Group 1", null),
+                    new Dragonwolf.Razor.Helpers.Models.ColumnModel("MyTable2", "Test3", "Test 3", typeof(double?), true, false, false, null, null, null, null, "Group 2", null, "Group 2", null),
+                    new Dragonwolf.Razor.Helpers.Models.ColumnModel("MyTable2", "Test4", "Test 4", typeof(bool), true, false, false, null, null, null, null, "Group 2", null, "Group 2", null)
+               }, "MyTable2", "TableTest2", null, new { @class = "col-md-12", id = "divTableContainer2" })
+        </div>
+    </article>
+</fieldset>
+<br />
+<fieldset>
+    <legend>Table 3 : Datas From Server</legend>
+    <article>
+        <div>
+            @Html.KODataTable(new Dragonwolf.Razor.Helpers.Models.ColumnsModelsCollection()
+               {
+                    new Dragonwolf.Razor.Helpers.Models.ColumnModel("MyTable3", "Id", "Identifiant", typeof(int), true, false, false, null, null, null, null, null, null, null, null),
+                    new Dragonwolf.Razor.Helpers.Models.ColumnModel("MyTable3", "Libelle", "Nom", typeof(string), true, false, false, null, null, null, null, null, null, null, null),
+                    new Dragonwolf.Razor.Helpers.Models.ColumnModel("MyTable3", "Test", "Test 1", typeof(string), true, false, false, null, null, null, null, "Group 1", null, "Group 1", null),
+                    new Dragonwolf.Razor.Helpers.Models.ColumnModel("MyTable3", "Test2", "Test 2", typeof(string), true, false, false, null, null, null, null, "Group 1", null, "Group 1", null),
+                    new Dragonwolf.Razor.Helpers.Models.ColumnModel("MyTable3", "Test3", "Test 3", typeof(double?), true, false, false, null, null, null, null, "Group 2", null, "Group 2", null),
+                    new Dragonwolf.Razor.Helpers.Models.ColumnModel("MyTable3", "Test4", "Test 4", typeof(bool), true, false, false, null, null, null, null, "Group 2", null, "Group 2", null)
+               }, "MyTable3", "TableTest3", Url.Action("GetTestDatas", "Home"), new { @class = "col-md-12", id = "divTableContainer3" })
+        </div>
+    </article>
+</fieldset>
+
+<script type="text/javascript" src="~/Scripts/Home/Index.js"></script>

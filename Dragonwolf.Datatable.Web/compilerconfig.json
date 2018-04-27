@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "Content/bootstrap.css",
+    "inputFile": "Content/bootstrap.less"
+  },
+  {
+    "outputFile": "Content/Dragonwolf/Dragonwolf.css",
+    "inputFile": "Content/Dragonwolf/Dragonwolf.less"
+  }
+]

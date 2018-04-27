@@ -1,0 +1,90 @@
+﻿table {
+    color: @baseTextColor;
+}
+
+table > thead {
+    color: @baseInverseTextColor;
+}
+
+table > thead > tr > th {
+    background-color: @baseTableHeaderBackgroundColor;
+}
+
+table > thead > tr > th > div.input-group, table > thead > tr > th > div.input-group > label,
+table > thead > tr > th > div.row, table > thead > tr > th > div.row > label {
+    background-color: transparent;
+    border-color: transparent;
+    border-width: 0px;
+    color: @baseInverseTextColor;
+    border: none;
+    box-shadow: none;
+}
+
+table > thead > tr > th button.btn {
+    background-color: @baseTableSortingButtonBackgroundColor;
+    border-color: @baseTableSortingButtonBorders;
+    border-width: 1px;
+}
+
+table > thead > tr > th > button.btn:hover {
+    background-color: @baseTableSortingButtonHoverBackgroundColor;
+}
+
+table > thead > tr > th > button.btn:active {
+    background-color: @baseTableSortingButtonActiveBackgroundColor;
+    border-width: 2px;
+}
+
+table > thead > tr > th > button.btn:focus {
+    background-color: @baseTableSortingButtonFocusBackgroundColor;
+}
+
+table > thead > tr > th.ColumnGroup {
+    background-color: @baseTableGroupHeaderBackgroundColor;
+}
+
+table > tbody {
+    color: @baseTextColor;
+}
+
+table > tbody > tr:nth-child(even) > td {
+    background-color: @baseTableCellBackgroundColor;
+}
+
+table > tbody > tr:nth-child(odd) > td {
+    background-color: @baseTableAlternativeCellBackgroundColor;
+}
+
+div[name="DragonwolfPagingZone"] > div > div
+{
+    padding: 0;
+}
+
+div[name="DragonwolfPagingZone"] > div > div > label {
+    background-color: transparent;
+    border-color: transparent;
+    border-width: 0px;
+    color: @baseTextColor;
+    border: none;
+    box-shadow: none;
+}
+
+div[name="DragonwolfPagingZone"] > div > div button.btn {
+    background-color: @baseTablePagingButtonBackgroundColor;
+    border-color: @baseTablePagingButtonBorders;  
+    color: @baseInverseTextColor;
+    border-width: 1px;
+}
+
+div[name="DragonwolfPagingZone"] > div > div button.btn:hover {
+    background-color: @baseTablePagingButtonHoverBackgroundColor;
+}
+
+div[name="DragonwolfPagingZone"] > div > div button.btn:active {
+    background-color: @baseTablePagingButtonActiveBackgroundColor;
+    border-width: 2px;
+}
+
+div[name="DragonwolfPagingZone"] > div > div button.btn:focus {
+    background-color: @baseTablePagingButtonFocusBackgroundColor;
+}
