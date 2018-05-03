@@ -6,5 +6,13 @@
   {
     "outputFile": "Content/Dragonwolf/Dragonwolf.css",
     "inputFile": "Content/Dragonwolf/Dragonwolf.less"
+  },
+  {
+    "outputFile": "Content/SampleCssThemes/Sample1.css",
+    "inputFile": "Content/SampleCssThemes/Sample1.less"
+  },
+  {
+    "outputFile": "Content/SampleCssThemes/Sample2.css",
+    "inputFile": "Content/SampleCssThemes/Sample2.less"
   }
 ]

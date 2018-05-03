@@ -2,11 +2,12 @@
 <package >
   <metadata>
     <id>DragonwolfRazorHelper</id>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
+    <title>DRAGONWOLF's MVC Razor's Knockout Datatable</title>
     <authors>DRAGONWOLF Dominus</authors>
     <owners>DRAGONWOLF Dominus</owners>
     <iconUrl>https://avatars2.githubusercontent.com/u/38784366?s=400&amp;v=4</iconUrl>
-    <projectUrl></projectUrl>
+    <projectUrl>https://github.com/Dragonwolf-Dominus/Dragonwolf-MVC.Razor.Knockout.Datatable</projectUrl>
     <licenseUrl>http://www.opensource.org/licenses/mit-license.php</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Dragonwolf's Razors' Helpers For MVC</description>

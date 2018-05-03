@@ -1,6 +1,105 @@
-﻿var KODataTable = function (tableDomId, dataArray, sortingColumns, datasUrl)
+﻿/*
+ * Dragonwolf internationalization
+ */
+var KODataTableLabels = function (culture)
+{
+    culture = culture ? culture.toLowerCase() : "";
+
+    this.ResultatsParPage = ko.observable("");
+    this.Page = ko.observable("");
+    this.SurPages = ko.observable("");
+
+    this.PageSuivante = ko.observable("");
+    this.PagePrecedante = ko.observable("");
+    this.PremierePage = ko.observable("");
+    this.DernierePage = ko.observable("");
+
+    this.Ascendant = ko.observable("");
+    this.Descendant = ko.observable("");
+
+    switch (culture)
+    {
+        case "es":
+        case "es-es":
+        case "es-ar":
+        case "es-bo":
+        case "es-cl":
+        case "es-co":
+        case "es-cr":
+        case "es-sv":
+        case "es-ec":
+        case "es-gt":
+        case "es-hn":
+        case "es-mx":
+        case "es-ni":
+        case "es-pa":
+        case "es-py":
+        case "es-pe":
+        case "es-pr":
+        case "es-tt":
+        case "es-uy":
+        case "es-ve":
+            this.ResultatsParPage = ko.observable("Resultados por página : ");
+            this.Page = ko.observable("Página");
+            this.SurPages = ko.observable("sobre");
+
+            this.PageSuivante = ko.observable("Página Siguiente");
+            this.PagePrecedante = ko.observable("Page Precedente");
+            this.PremierePage = ko.observable("Primera Página");
+            this.DernierePage = ko.observable("Última Página");
+
+            this.Ascendant = ko.observable("Ascendiente");
+            this.Descendant = ko.observable("Descendante");
+            break;
+        case "fr":
+        case "fr-fr":
+        case "fr-be":
+        case "fr-ca":
+        case "fr-lu":
+        case "fr-ch":
+            this.ResultatsParPage = ko.observable("Résultats par page : ");
+            this.Page = ko.observable("Page");
+            this.SurPages = ko.observable("sur");
+
+            this.PageSuivante = ko.observable("Page Suivante");
+            this.PagePrecedante = ko.observable("Page Précédante");
+            this.PremierePage = ko.observable("Première Page");
+            this.DernierePage = ko.observable("Dernière Page");
+
+            this.Ascendant = ko.observable("Ascendant");
+            this.Descendant = ko.observable("Descendant");
+            break;
+        default:
+            this.ResultatsParPage = ko.observable("Results count on page");
+            this.Page = ko.observable("Page");
+            this.SurPages = ko.observable("over");
+
+            this.PageSuivante = ko.observable("Next page");
+            this.PagePrecedante = ko.observable("Previous Page");
+            this.PremierePage = ko.observable("First page");
+            this.DernierePage = ko.observable("Last Page");
+
+            this.Ascendant = ko.observable("Ascending");
+            this.Descendant = ko.observable("Descending");
+            break;
+    }
+};
+
+/*
+ *  Dragonwolf's Knockout DataTable
+ */
+var KODataTable = function (tableDomId, dataArray, sortingColumns, datasUrl)
 {
     var self = this;
+
+    var userLang = navigator.language || navigator.userLanguage;
+
+    this.Culture = ko.observable(userLang);
+
+    this.Libelles = ko.computed(function()
+    {
+        return new KODataTableLabels(self.Culture());
+    }).extend({ deferred: true });
 
     this.DatasUrl = ko.observable(datasUrl ? datasUrl : null);
 
@@ -13,7 +112,7 @@
     if (sortingColumns)
     {
         $.each(sortingColumns, function (columnIndex, column) {
-            self.SortingColumns()[column] = ko.observable(null);
+            self.SortingColumns()[column] = ko.observable({ order: 0, colName: column, value: null });
         });
     }
 
@@ -27,6 +126,12 @@
 
     this.ResultsCount = ko.observable(self.Datas().length);
     this.ResultatsParPage = ko.observable(10);
+    this.DataSizesList = ko.observableArray([5, 10, 15, 20, 40, 50, 100, 150, 200, 300]);
+
+    this.ResultatsParPage.subscribe(function (e) {
+        self.GestionPaging();
+    });
+
     this.Page = ko.observable(0);
     this.NombrePages = ko.computed(function () {
         var result = 0;
@@ -37,7 +142,7 @@
         result = tempResultArrondi;
 
         return result;
-    });
+    }).extend({ deferred: true });
 
     this.GestionPaging();
 
@@ -62,7 +167,7 @@
     });
 
     this.ComptePage = ko.computed(function () {
-        return "Page " + (self.Page() + 1).toString() + " sur " + self.NombrePages().toString();
+        return self.Libelles().Page() + " " + (self.Page() + 1).toString() + " " + self.Libelles().SurPages() + " " + self.NombrePages().toString();
     });
 
     this.Table = $("#" + tableDomId);
@@ -91,28 +196,40 @@ KODataTable.prototype.SortingColumnClicked = ko.command({
 
         if (propertyName)
         {
-            $.each(this.SortingColumns(), function (fieldName, fieldValue) {
-                if (fieldName !== propertyName)
+            var valueContainer = this.SortingColumns()[propertyName]();
+
+            if (valueContainer)
+            {
+                var value = valueContainer ? valueContainer.value : null;
+
+                if (valueContainer.value === null)
                 {
-                    self.SortingColumns()[fieldName](null);
+                    valueContainer.order = 9999;
+                    valueContainer.value = true;
                 }
-            });
+                else if (valueContainer.value === true)
+                {
+                    valueContainer.value = false;
+                }
+                else
+                {
+                    valueContainer.order = 0;
+                    valueContainer.value = null;
+                }
 
-            var value = this.SortingColumns()[propertyName]();
+                this.SortingColumns()[propertyName](valueContainer);
 
-            if (value === null)
-            {
-                value = true;
-            }
-            else if (value === true) {
-                value = false;
-            }
-            else
-            {
-                value = null;
-            }
+                var sortedSortings = self.GetOrderedActiveSorting();
 
-            this.SortingColumns()[propertyName](value);
+                var i = 0;
+                $.each(sortedSortings, function (elementIndex, element)
+                {
+                    i = i + 1;
+                    element.order = i;
+
+                    self.SortingColumns()[element.colName](element);
+                });
+            }
 
             this.GestionPaging();
         }
@@ -148,15 +265,15 @@ KODataTable.prototype.DernierePageClicked = function ()
 KODataTable.prototype.GestionPaging = function () {
     var self = this;
 
-    var sortPropertyName = null;
-    var sortPropertyValue = null;
+    var sortingTable = [];
 
-    $.each(self.SortingColumns(), function (fieldName, fieldValue) {
-        if (!sortPropertyName && fieldValue() !== null)
-        {
-            sortPropertyName = fieldName;
-            sortPropertyValue = fieldValue();
-        }
+    var sortedSortings = self.GetOrderedActiveSorting();
+
+    $.each(sortedSortings, function (elementIndex, element) {
+        sortingTable.push({
+            key: element.colName,
+            ascendant: element.value
+        });
     });
 
     if (self.DatasUrl() && self.DatasUrl() != "")
@@ -168,10 +285,7 @@ KODataTable.prototype.GestionPaging = function () {
                 page: self.Page(),
                 resultatsParPage: self.ResultatsParPage(),
             },
-            sorting: [{
-                key: sortPropertyName,
-                ascendant: sortPropertyValue
-            }]
+            sorting: sortingTable
         };
 
         if (self.AdditionalSendingDatas())
@@ -209,9 +323,9 @@ KODataTable.prototype.GestionPaging = function () {
                         self.Datas.push(tempKoData);
                     });
 
-                    if (AdditionalCallbackFunction)
+                    if (self.AdditionalCallbackFunction)
                     {
-                        AdditionalCallbackFunction();
+                        self.AdditionalCallbackFunction();
                     }
                 }
             }
@@ -221,26 +335,41 @@ KODataTable.prototype.GestionPaging = function () {
     {
         self.ResultsCount(self.Datas().length);
 
-        if (sortPropertyName) {
-            self.Datas(self.Datas().sort(function (a, b) {
+        if (sortingTable && sortingTable.length > 0)
+        {
+            self.Datas(self.Datas().sort(function (a, b)
+            {
                 var result = 0;
 
-                if (a[sortPropertyName]() < b[sortPropertyName]()) {
-                    result = -1;
-                }
-                else if (a[sortPropertyName]() > b[sortPropertyName]()) {
-                    result = 1;
-                }
-                else {
-                    result = 0;
-                }
+                $.each(sortingTable, function (sortValueIndex, sortValue)
+                {
+                    var sortComplement = 0;
+
+                    var coef = Math.pow(10, (sortingTable.length - sortValueIndex) - 1);
+
+                    if (a[sortValue.key]() < b[sortValue.key]())
+                    {
+                        sortComplement = - (1 * coef);
+                    }
+                    else if (a[sortValue.key]() > b[sortValue.key]())
+                    {
+                        sortComplement = (1 * coef);
+                    }
+                    else
+                    {
+                        sortComplement = 0;
+                    }
+
+                    if (sortValue.ascendant !== true)
+                    {
+                        sortComplement = -sortComplement;
+                    }
+
+                    result = result + sortComplement;
+                });
 
                 return result;
             }));
-
-            if (sortPropertyValue !== true) {
-                self.Datas(self.Datas().reverse());
-            }
         }
 
         if (self.Datas().length <= self.ResultatsParPage()) {
@@ -265,6 +394,22 @@ KODataTable.prototype.GestionPaging = function () {
             });
         }
     }
+};
+
+KODataTable.prototype.GetOrderedActiveSorting = function ()
+{
+    var self = this;
+
+    var tempSortings = [];
+    $.each(self.SortingColumns(), function (sortingElementIndex, sortingElement)
+    {
+        tempSortings.push(sortingElement());
+    });
+
+    var activeSortings = $.grep(tempSortings, function (e) { return e.order !== 0; });
+    var sortedSortings = activeSortings.sort(function (a, b) { return a.order - b.order });
+
+    return sortedSortings;
 };
 
 KODataTable.SetTable = function (tableVarName, tableDomId, dataArray, sortableColumns, datasUrl) {

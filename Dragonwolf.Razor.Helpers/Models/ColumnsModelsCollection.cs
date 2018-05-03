@@ -11,6 +11,42 @@ namespace Dragonwolf.Razor.Helpers.Models
 {
     public class ColumnsModelsCollection : Collection<ColumnModel>
     {
+        #region Vars
+        public string _tableJSName;
+        #endregion
+
+        #region Properties
+        public string TableJSName
+        {
+            get
+            {
+                return this._tableJSName;
+            }
+
+            private set
+            {
+                this._tableJSName = value;
+
+                if (!string.IsNullOrEmpty(this._tableJSName))
+                {
+                    this.ToList().ForEach(col => col.SetTableJSName(this._tableJSName));
+                }
+            }
+        }
+        #endregion
+
+        #region Constructor
+        public ColumnsModelsCollection() : base()
+        {
+
+        }
+
+        public ColumnsModelsCollection(string tableJSName) : base()
+        {
+            this.SetTableJSName(tableJSName);
+        }
+        #endregion
+
         #region Public Methods
         public string GetHeader()
         {
@@ -76,6 +112,36 @@ namespace Dragonwolf.Razor.Helpers.Models
             result = line.SpecialFormat(cells);
 
             return result;
+        }
+
+        public void SetTableJSName(string tableJSName)
+        {
+            if (!string.IsNullOrEmpty(tableJSName))
+            {
+                TableJSName = tableJSName;
+            }
+        }
+        #endregion
+
+        #region Protected Methods
+        protected override void InsertItem(int index, ColumnModel item)
+        {
+            if (!string.IsNullOrEmpty(this._tableJSName))
+            {
+                item.SetTableJSName(this._tableJSName);
+            }
+
+            base.InsertItem(index, item);
+        }
+
+        protected override void SetItem(int index, ColumnModel item)
+        {
+            if (!string.IsNullOrEmpty(this._tableJSName))
+            {
+                item.SetTableJSName(this._tableJSName);
+            }
+
+            base.SetItem(index, item);
         }
         #endregion
     }

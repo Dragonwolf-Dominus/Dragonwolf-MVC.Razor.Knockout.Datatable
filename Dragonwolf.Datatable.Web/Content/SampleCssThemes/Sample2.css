@@ -1,6 +1,4 @@
-﻿/* Global */
-/* Table */
-/* Table */
+﻿/* Table */
 table {
   color: #000000;
 }
@@ -8,7 +6,7 @@ table > thead {
   color: #FFFFFF;
 }
 table > thead > tr > th {
-  background-color: rgba(0, 185, 162, 0.5);
+  background-color: rgba(255, 0, 110, 0.5);
 }
 table > thead > tr > th button > i > span > label {
   margin-bottom: 0px;
@@ -25,31 +23,31 @@ table > thead > tr > th > div.row > label {
   box-shadow: none;
 }
 table > thead > tr > th button.btn {
-  background-color: rgba(0, 185, 162, 0.5);
-  border-color: rgba(0, 57, 50, 0.5);
+  background-color: rgba(255, 0, 110, 0.5);
+  border-color: rgba(128, 0, 55, 0.5);
   border-width: 1px;
 }
 table > thead > tr > th > button.btn:hover {
-  background-color: rgba(185, 255, 246, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 table > thead > tr > th > button.btn:active {
-  background-color: rgba(0, 32, 28, 0.5);
+  background-color: rgba(102, 0, 44, 0.5);
   border-width: 2px;
 }
 table > thead > tr > th > button.btn:focus {
-  background-color: rgba(0, 83, 73, 0.5);
+  background-color: rgba(153, 0, 66, 0.5);
 }
 table > thead > tr > th.ColumnGroup {
-  background-color: rgba(0, 83, 73, 0.5);
+  background-color: rgba(153, 0, 66, 0.5);
 }
 table > tbody {
   color: #000000;
 }
 table > tbody > tr:nth-child(even) > td {
-  background-color: rgba(236, 255, 253, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 table > tbody > tr:nth-child(odd) > td {
-  background-color: rgba(185, 255, 246, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 div[name="DragonwolfPagingZone"] > div > div {
   padding: 0;
@@ -63,18 +61,18 @@ div[name="DragonwolfPagingZone"] > div > div > label {
   box-shadow: none;
 }
 div[name="DragonwolfPagingZone"] > div > div button.btn {
-  background-color: rgba(0, 185, 162, 0.5);
-  border-color: rgba(0, 57, 50, 0.5);
+  background-color: rgba(255, 0, 110, 0.5);
+  border-color: rgba(128, 0, 55, 0.5);
   color: #FFFFFF;
   border-width: 1px;
 }
 div[name="DragonwolfPagingZone"] > div > div button.btn:hover {
-  background-color: rgba(185, 255, 246, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 div[name="DragonwolfPagingZone"] > div > div button.btn:active {
-  background-color: rgba(0, 32, 28, 0.5);
+  background-color: rgba(102, 0, 44, 0.5);
   border-width: 2px;
 }
 div[name="DragonwolfPagingZone"] > div > div button.btn:focus {
-  background-color: rgba(0, 83, 73, 0.5);
+  background-color: rgba(153, 0, 66, 0.5);
 }

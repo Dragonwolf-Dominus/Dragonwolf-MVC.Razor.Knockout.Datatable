@@ -44,12 +44,6 @@ namespace Dragonwolf.Razor.Helpers.Models
             set;
         }
 
-        public bool IsFilterable
-        {
-            get;
-            set;
-        }
-
         public string ColumnTemplate
         {
             get;
@@ -181,15 +175,18 @@ namespace Dragonwolf.Razor.Helpers.Models
         #endregion
 
         #region Constructors
-        public ColumnModel(string tableJSName, string propertyName, string columnName = null, Type columnType = null, bool isSortable = false, bool isEditable = false, bool isFilterable = false, string columnTemplate = null, string headerTemplate = null, string headerClass = null, string cellClass = null, string columnGroup = null, string columnGroupClass = null, string columnGroupName = null, string columnGroupTemplate = null, bool isVisible = true, string dropDownDataSourceAccess = null, string dropDownDataValueBinding = null, string dropDownDataTextBinding = null, string dropDownDataVisibleOptionBinding = null)
+        public ColumnModel(string tableJSName, string propertyName, string columnName = null, Type columnType = null, bool isSortable = false, bool isEditable = false, string columnTemplate = null, string headerTemplate = null, string headerClass = null, string cellClass = null, string columnGroup = null, string columnGroupClass = null, string columnGroupName = null, string columnGroupTemplate = null, bool isVisible = true, string dropDownDataSourceAccess = null, string dropDownDataValueBinding = null, string dropDownDataTextBinding = null, string dropDownDataVisibleOptionBinding = null) : this(propertyName, columnName, columnType, isSortable, isEditable, columnTemplate, headerTemplate, headerClass, cellClass, columnGroup, columnGroupClass, columnGroupName, columnGroupTemplate, isVisible, dropDownDataSourceAccess, dropDownDataValueBinding, dropDownDataTextBinding, dropDownDataVisibleOptionBinding)
         {
-            TableJSName = tableJSName;
+            this.SetTableJSName(tableJSName);
+        }
+
+        public ColumnModel(string propertyName, string columnName = null, Type columnType = null, bool isSortable = false, bool isEditable = false, string columnTemplate = null, string headerTemplate = null, string headerClass = null, string cellClass = null, string columnGroup = null, string columnGroupClass = null, string columnGroupName = null, string columnGroupTemplate = null, bool isVisible = true, string dropDownDataSourceAccess = null, string dropDownDataValueBinding = null, string dropDownDataTextBinding = null, string dropDownDataVisibleOptionBinding = null)
+        {
             PropertyName = propertyName;
             ColumnName = string.IsNullOrEmpty(columnName) ? PropertyName : columnName;
             ColumnType = columnType != null ? columnType : typeof(string);
             IsSortable = isSortable;
             IsEditable = isEditable;
-            IsFilterable = isFilterable;
             ColumnTemplate = columnTemplate;
             HeaderTemplate = headerTemplate;
             HeaderClass = headerClass ?? string.Empty;
@@ -229,7 +226,14 @@ namespace Dragonwolf.Razor.Helpers.Models
 
             if (string.IsNullOrEmpty(HeaderTemplate))
             {
-                var sortingButton = ("<span class=\"input-group-btn\"><button type=\"button\" data-property=\"{0}\" class=\"btn btn-primary\" data-bind=\"click: $.proxy($root." + TableJSName + ".SortingColumnClicked, $root." + TableJSName + "), activity: $root." + TableJSName + ".SortingColumnClicked.isExecuting\"><i class=\"glyphicon\" data-bind=\"css: { 'glyphicon-triangle-right': $root." + TableJSName + ".SortingColumns().{0}() === null, 'glyphicon-triangle-bottom': $root." + TableJSName + ".SortingColumns().{0}() === true, 'glyphicon-triangle-top': $root." + TableJSName + ".SortingColumns().{0}() === false }\"></i></button></span>").SpecialFormat(PropertyName);
+                var sortingButton = ("<span class=\"input-group-btn\">" +
+                                     "  <button type=\"button\" data-property=\"{0}\" class=\"btn btn-primary\" data-bind=\"click: $.proxy($root." + TableJSName + ".SortingColumnClicked, $root." + TableJSName + "), activity: $root." + TableJSName + ".SortingColumnClicked.isExecuting, attr: { title: $root." + TableJSName + ".SortingColumns().{0}().value === null ? '' : ($root." + TableJSName + ".SortingColumns().{0}().value === true ? $root." + TableJSName + ".Libelles().Ascendant() : ($root." + TableJSName + ".SortingColumns().{0}().value === false ? $root." + TableJSName + ".Libelles().Descendant() : '')) }\">" +
+                                     "      <!-- ko if: $root." + TableJSName + ".SortingColumns().{0}().order !== 0 -->" +
+                                     "          <i><span><label data-bind=\"text: $root." + TableJSName + ".SortingColumns().{0}().order\"></label>&nbsp;</span></i>" +
+                                     "      <!-- /ko -->" +
+                                     "      <i class=\"glyphicon\" data-bind=\"css: { 'glyphicon-triangle-right': $root." + TableJSName + ".SortingColumns().{0}().value === null, 'glyphicon-triangle-bottom': $root." + TableJSName + ".SortingColumns().{0}().value === true, 'glyphicon-triangle-top': $root." + TableJSName + ".SortingColumns().{0}().value === false }\"></i>" +
+                                     "  </button>" +
+                                     "</span>").SpecialFormat(PropertyName);
 
                 var cellContent =  ("<div class=\"{2}\">" + 
                              "   <label class=\"form-control\">{0}</label>" +
@@ -278,8 +282,6 @@ namespace Dragonwolf.Razor.Helpers.Models
                     else if (Type == typeof(DateTime) ||
                             Type == typeof(DateTime?))
                     {
-                        
-
                         input = (   "<div class=\"input-group\">" + Environment.NewLine +
                                     "  <input type=\"date\" class=\"form-control\" data-bind=\"value: {0}\" />" + Environment.NewLine +
                                     "  <div class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></div>" + Environment.NewLine +
@@ -346,6 +348,14 @@ namespace Dragonwolf.Razor.Helpers.Models
             }
 
             return result;
+        }
+
+        public void SetTableJSName(string tableJSName)
+        {
+            if (!string.IsNullOrEmpty(tableJSName))
+            {
+                TableJSName = tableJSName;
+            }
         }
         #endregion
     }

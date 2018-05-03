@@ -129,6 +129,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\ItemModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -147,6 +148,18 @@
       <DependentUpon>Dragonwolf.css</DependentUpon>
     </Content>
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\SampleCssThemes\Sample1.css">
+      <DependentUpon>Sample1.less</DependentUpon>
+    </Content>
+    <Content Include="Content\SampleCssThemes\Sample1.min.css">
+      <DependentUpon>Sample1.css</DependentUpon>
+    </Content>
+    <Content Include="Content\SampleCssThemes\Sample2.css">
+      <DependentUpon>Sample2.less</DependentUpon>
+    </Content>
+    <Content Include="Content\SampleCssThemes\Sample2.min.css">
+      <DependentUpon>Sample2.css</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -233,8 +246,10 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
+    <Content Include="Content\Dragonwolf\Dragonwolf.Table.BaseVariables.less" />
     <None Include="Content\Dragonwolf\Dragonwolf.Table.less" />
-    <None Include="Content\Dragonwolf\Dragonwolf.Variables.less" />
+    <Content Include="Content\Dragonwolf\Dragonwolf.Global.BaseVariables.less" />
+    <None Include="Content\Dragonwolf\Dragonwolf.Table.Variables.less" />
     <Content Include="Content\Dragonwolf\Dragonwolf.less" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
@@ -247,6 +262,8 @@
     <Content Include="Nuspec\DragonwolfRazorHelper.nuspec">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Content\SampleCssThemes\Sample1.less" />
+    <Content Include="Content\SampleCssThemes\Sample2.less" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Home\Index.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -290,8 +307,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />

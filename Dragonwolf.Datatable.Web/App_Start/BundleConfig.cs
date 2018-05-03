@@ -42,6 +42,12 @@ namespace Dragonwolf.Datatable.Web
 
             bundles.Add(new StyleBundle("~/Content/Dragonwolf").Include(
                       "~/Content/Dragonwolf/Dragonwolf.css"));
+
+            bundles.Add(new StyleBundle("~/Content/Sample1").Include(
+                      "~/Content/SampleCssThemes/Sample1.css"));
+
+            bundles.Add(new StyleBundle("~/Content/Sample2").Include(
+                      "~/Content/SampleCssThemes/Sample2.css"));
             #endregion
 
         }

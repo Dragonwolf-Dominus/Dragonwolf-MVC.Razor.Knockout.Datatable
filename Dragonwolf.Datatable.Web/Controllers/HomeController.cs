@@ -11,13 +11,26 @@ namespace Dragonwolf.Datatable.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string cssStyle = null)
         {
             var model = new HomeModel() { ListeItems = new List<ItemModel>() };
 
+            switch (cssStyle)
+            {
+                case "Style1":
+                    model.CssStyleType = 1;
+                    break;
+                case "Style2":
+                    model.CssStyleType = 2;
+                    break;
+                default:
+                    model.CssStyleType = 0;
+                    break;
+            }
+
             var randomizer = new Random((int)DateTime.Now.ToFileTimeUtc());
 
-            var nombreValeurs = 10 * randomizer.Next(1000);
+            var nombreValeurs = 10 * randomizer.Next(100);
 
             for (var i = 0; i < nombreValeurs; i++)
             {
@@ -33,20 +46,6 @@ namespace Dragonwolf.Datatable.Web.Controllers
             }
 
             return View(model);
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
 
         [HttpPost]

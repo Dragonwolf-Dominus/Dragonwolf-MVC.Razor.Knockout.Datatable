@@ -1,47 +1,61 @@
-﻿<!DOCTYPE html>
-<html>
-    <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>@ViewBag.Title - Mon application ASP.NET</title>
-        @Styles.Render("~/Content/css")
-        @Styles.Render("~/Content/Dragonwolf")
-        @Scripts.Render("~/bundles/modernizr")
+﻿@model Dragonwolf.Datatable.Web.Models.BaseModel
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @Scripts.Render("~/bundles/Knockout")
-        @Scripts.Render("~/bundles/Dragonwolf")
-    </head>
-    <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("Nom de l'application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                        <li>@Html.ActionLink("À propos de", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    </ul>
-                </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mon application ASP.NET</title>
+    @Styles.Render("~/Content/css")
+
+    @switch (Model.CssStyleType)
+    {
+        case 1:
+            @Styles.Render("~/Content/Sample1")
+            break;
+        case 2:
+            @Styles.Render("~/Content/Sample2")
+            break;
+        default:
+            @Styles.Render("~/Content/Dragonwolf")
+            break;
+    }
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/Knockout")
+    @Scripts.Render("~/bundles/Dragonwolf")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Nom de l'application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Default Sample", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Sample 1 style", "Index", "Home", new { cssStyle = "Style1" }, new { })</li>
+                    <li>@Html.ActionLink("Sample 2 style", "Index", "Home", new { cssStyle = "Style2" }, new { })</li>
+                </ul>
             </div>
         </div>
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-            </footer>
-        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
 
-        @RenderSection("scripts", required: false)
-    </body>
+    @RenderSection("scripts", required: false)
+</body>
 </html>
